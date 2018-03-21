@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = null;
+}
+@using szzx.web.Common
+@model PayRequestData
+
+<!doctype html>
+<html>
+@Html.Partial("_Head")
+<body>
+    <div class="indexbody">
+        <div class="top_title">认证注册</div>
+        <div class="register4">
+            您只需缴纳:<span class="money huang">@(Model.Fee/100)</span>元，即可成为苏州市足协的一员，审核通过后可获得苏州足协提供的足球活动信息的相关服务。<br/>
+            提示：<br/>1, 如果未通过审核，年注册会费将原渠道返回。<br />2, 个人若加入球队，成功加入球队后，个人年注册费将全额返回至球队管理员账户，该费用由球队自行处理，请个人会员至建队会员号处取回个人年注册会费。<br />3，如果没有加入球队，不退费。
+        </div>
+        <div class="register4_C">
+            <a class="greenbuttom" id="confirmPay" onclick="javascript:void(0)">确认付款</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            //公众号支付
+            jQuery('a#confirmPay').click(function (e) {
+                WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                    "appId": "@Model.AppId", //公众号名称，由商户传入
+                    "timeStamp": "@Model.TimeStamp", //时间戳
+                    "nonceStr": "@Model.NonceStr", //随机串
+                    "package": "@Html.Raw(Model.Package)",//扩展包
+                    "signType": "MD5", //微信签名方式:MD5
+                    "paySign": "@Model.PaySign" //微信签名
+            }, function (res) {
+
+                //alert(JSON.stringify(res));
+
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    alert('支付成功！');
+                    var el = $.loading({
+                        content: '正在跳转...',
+                    });
+                    setTimeout(function () {
+                        window.location.href = "@Url.Action("Index","Home")";
+                    },2000)
+
+                    //console.log(JSON.stringify(res));
+                }
+                // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                //因此微信团队建议，当收到ok返回时，向商户后台询问是否收到交易成功的通知，若收到通知，前端展示交易成功的界面；若此时未收到通知，商户后台主动调用查询订单接口，查询订单的当前状态，并反馈给前端展示相应的界面。
+            });
+
+        });
+
+        //WeixinJSBridge.log('yo~ ready.');
+
+        }, false);
+    </script>
+</body>
+</html>

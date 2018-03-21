@@ -1,0 +1,122 @@
+﻿
+@{
+    Layout = null;
+}
+@using szzx.web.Common
+@model szzx.web.Entity.Vip
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart class="hy_bg">
+    <section class="weui-p20">
+
+        <div class="weui-bod_r weui-bgf weui-mt60 weui-box_s">
+            <div class="weui-f14 weui-bod_r weui-p15">
+                <div class="weui-t_c photo"><a href="#" class="weui-dnb weui-bod_r50 weui-box_s weui-p_r photo_box"><img src="@(Model?.ImgPath)" class="weui-bod_r50" width="100"><div class="upbtn"><input type="file"></div></a></div>
+                <h3 class="weui-f18 weui-t_c weui-pt10">@(Model?.VipName) <img src="~/assets/web/images/i_07.png" width="25"></h3>
+                <div class=" weui-bb weui-pb10 weui-pt20"><span class="weui-c_9">会员到期时间：</span> @(Model?.ExpireDate?.ToString("yyyy-MM-dd")) </div>
+                <div class="clearfix weui-pt10">
+                    <span class="weui-fl weui-pt5"><span class="weui-c_9">学习时长：</span> @(Model?.StudyTime)小时</span>
+                    
+                    <a href="javascript:;" id="btnGetPay" class="weui-btn weui-btn_mini weui-btn_qd weui-btn_qd1 weui-fr">@(Model.FeeStatus == 0 ? "成为教练" : "续费")</a>
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <div class="weui-bod_r weui-bgf weui-mt15 weui-box_s">
+            <div class="weui-cells weui-f14 weui-bod_r">
+                <a class="weui-cell weui-cell_access" href="@Url.Action("PayLog")">
+                    <div class="weui-cell__hd"><img src="~/assets/web/images/3_05.png" class="weui-db weui-bod_r50 weui-mr10" width="30" alt=""></div>
+                    <div class="weui-cell__bd">
+                        <p>消费记录</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="@Url.Action("Categories","Lesson")">
+                    <div class="weui-cell__hd"><img src="~/assets/web/images/3_08.png" class="weui-db weui-bod_r50 weui-mr10" width="30" alt=""></div>
+                    <div class="weui-cell__bd">
+                        <p>在线学习</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                @*<div class="weui-cell">
+                    <div class="weui-cell__hd"><img src="~/assets/web/images/3_08.png" class="weui-db weui-bod_r50 weui-mr10" width="30" alt=""></div>
+                    <div class="weui-cell__bd">
+                        <p><a href="@Url.Action("Categories","Lesson")" style="color:black">在线学习</a></p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </div>*@
+                <a class="weui-cell weui-cell_access" href="@Url.Action("CommentReply")">
+                    <div class="weui-cell__hd"><img src="~/assets/web/images/3_10.png" class="weui-db weui-bod_r50 weui-mr10" width="30" alt=""></div>
+                    <div class="weui-cell__bd">
+                        <p>咨询回复</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+                <a class="weui-cell weui-cell_access" href="javascript:;">
+                    <div class="weui-cell__hd"><img src="~/assets/web/images/3_12.png" class="weui-db weui-bod_r50 weui-mr10" width="30" alt=""></div>
+                    <div class="weui-cell__bd">
+                        <p>活动推荐</p>
+                    </div>
+                    <div class="weui-cell__ft"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class=" weui-c_9 weui-f12 weui-t_c weui-pb15">
+        版权所有：苏州福特宝体育
+    </div>
+
+
+    <div class="weui-mask weui-d_n" id="payDiv">
+        @*<div class="weui-dialog">
+            <div class="p10 weui-t_c">
+                <div class="weui-t_r close"><img src="~/assets/web/images/close_03.png" width="25"></div>
+                <p>中捷足球教练在线学习课程</p>
+                <p class="weui-pt10 weui-pb10"><span class="weui-red01">￥<span class="weui-f24">@ViewBag.Fee</span></span>/年</p>
+                <div style="margin:0 auto; width:50%" class="weui-pb20 weui-pt10"><a href="javascript:;" id="btnPay" class="weui-btn weui-btn_primary weui-btn_primary1 weui-f14">微信支付</a></div>
+            </div>
+        </div>*@
+    </div>
+
+
+    <script type="text/javascript">
+     
+
+	$(function () {
+	    $('#btnGetPay').click(function () {
+
+	        var el = $.loading({
+	            content: '加载中...',
+	        });
+
+	        $('#payDiv').html('');
+
+	        $.ajax({
+	            url: '@Url.Action("GetPayRequest")',
+	            data: {},
+	            type: 'POST',
+	            success: function (data) {
+	                el.loading('hide');
+
+	                $('#payDiv').html(data);
+
+	                $('.close').click(function (e) {
+	                    $('.weui-mask').hide();
+	                });
+
+	                $('#payDiv').show();
+	            }
+	        });
+	    });
+
+	})
+    </script>
+
+</body>
+
+</html>

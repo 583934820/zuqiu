@@ -1,0 +1,13 @@
+﻿
+@using szzx.web.Models
+@model UploadImgModel
+<form id="@Model.FormId" method="post" class="uploadForm" enctype="multipart/form-data" action="@Url.Content("~/Upload/UploadImg")" target="@(Model.FormId)_uploadiframe" style="display:none">
+    <input type="file" name="file">
+    <input type="hidden" name="ImgId" value="@Model.ImgId" />
+    <input type="hidden" name="FormId" value="@Model.FormId" />
+    <input type="hidden" name="CallbackFun" value="@Model.CallbackFun" />
+    <input type="submit" name="btnSubmit">
+    <iframe name="@(Model.FormId)_uploadiframe"></iframe>
+</form>
+
+

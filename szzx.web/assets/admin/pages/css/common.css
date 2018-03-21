@@ -1,0 +1,27 @@
+﻿.right-list-li,.left-list-li {
+    text-align: center;
+    width: 100%;
+    list-style-type: none;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px dashed #808080;
+    cursor: pointer;
+
+}
+
+.right-list ,.left-list{
+    padding:0;
+    outline:none;
+}
+.select_role_div {
+    float:left; 
+    width:150px;
+    min-height:200px;
+    border:1px solid #808080
+}
+.select_role_img {
+    float:left;
+    height:200px;
+    line-height:200px
+}
+

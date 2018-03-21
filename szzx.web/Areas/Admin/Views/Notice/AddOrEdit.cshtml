@@ -1,0 +1,80 @@
+﻿
+@using szzx.web.Models
+@model szzx.web.Entity.Notice
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>@(Model.Id > 0 ? "编辑" : "新增")
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="portlet-body form" id="addDiv">
+                @Html.Partial("_UploadImg", new UploadImgModel { FormId = "formUploadImg1", ImgId = "img1" })
+                <form class="form-horizontal" id="editForm" action="@Url.Action("AddOrEdit")" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger" style="display:none">
+                            <button class="close" data-close="alert"></button>
+                            <span></span>
+                        </div>
+                        <input type="hidden" name="Id" id="id" value="@Model.Id" />
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">图片</label>
+
+                            <div class="col-md-9">
+                                <div><img id="img1" name="ImgPath" src="@Model.ImgPath" style="margin-bottom:5px;width:100px;height:100px;" /></div>
+                                <button type="button" data-form-id="formUploadImg1" class="btn btn-success btnUpload">上传</button>
+                                请上传大小为100 * 100的图片，格式为jpg
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">标题</label>
+                            <div class="col-md-9">
+                                <input type="text" name="Title" id="title" class="form-control" value="@Model.Title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">内容</label>
+                            <div class="col-md-9">
+                                @*<textarea name="Content" id="content" class="form-control" rows="10"></textarea>*@
+                                <script id="container" name="Content" type="text/plain">
+                                    @Html.Raw(Model.Content)
+                                </script>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-6">
+                                    <button type="button" id="btnSave" data-form-id="addForm" class="btn btn-success">保存</button>
+                                    <a class="btn btn-default" id="btnCancel" href="@Url.Action("Index")">返回</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/assets/global/plugins/ueditor/ueditor.config.js"></script>
+<script src="~/assets/global/plugins/ueditor/ueditor.all.min.js"></script>
+<script src="~/assets/admin/pages/app/notice.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+
+            notice.initAdd('@Url.Action("AddOrEdit")');
+    })
+    </script>
+}

@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "角色管理";
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>添加角色
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form" id="addDiv">
+                <form class="form-horizontal" id="addForm" action="@Url.Action("Add")" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger" style="display:none">
+                            <button class="close" data-close="alert"></button>
+                            <span></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">角色名称</label>
+                            <div class="col-md-4">
+                                <input type="text" name="RoleName" class="form-control" placeholder="输入角色名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">角色描述</label>
+                            <div class="col-md-4">
+                                <input type="text" name="RoleDesc" class="form-control" placeholder="输入角色描述">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" id="btnSave" class="btn btn-success">保存</button>
+                                <a class="btn btn-default" href="@Url.Action("Index")">返回列表</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/admin/pages/app/role.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+    $(function () {
+        roleManager.initAdd('@Url.Action("Add")');
+    })
+    </script>
+}
+

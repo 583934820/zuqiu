@@ -1,0 +1,38 @@
+﻿
+@model List<szzx.web.Entity.Video>
+@{
+    Layout = null;
+
+    var rows = Math.Ceiling(Model.Count / 2d);
+}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart class="weui-bgcolor">
+    <section class="weui-pl20 weui-pr20 weui-f14 weui-pb20 weui-t_c">
+        @for (var i = 0; i < rows; i++)
+                {
+                    var video1 = Model.ElementAt(i * 2);
+                    var video2 = Model.ElementAt(i * 2 + 1);
+            <div class="weui-flex weui-pt10">
+                <div class="weui-flex__item weui-pr10">
+                    <a href="@Url.Action("Detail",new { id = video1.Id})" class="weui-db">
+                        <img src="@video1.ImgPath" width="100%" class="weui-bod_r weui-box_s">
+                        <p class="weui-pt10">@video1.Title</p>
+                    </a>
+                </div>
+                <div class="weui-flex__item">
+                    <a href="@Url.Action("Detail",new { id = video2.Id})" class="weui-db">
+                        <img src="@video2.ImgPath" width="100%">
+                        <p class="weui-pt10">@video2.Title</p>
+                    </a>
+                </div>
+            </div>
+        }
+        
+
+    </section>
+</body>
+
+</html>

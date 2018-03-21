@@ -1,0 +1,92 @@
+﻿
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>课程评论
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+                @*<div class="actions">
+                    <a href="#" id="btnAdd" class="btn btn-primary btn-sm">
+                        <i class="fa fa-plus"></i> 添加
+                    </a>
+                </div>*@
+            </div>
+
+            <div class="portlet-body">
+                <form class="form-inline" role="form" id="searchForm" method="post">
+                    <div class="form-group">
+                        <input type="text" id="videoName" class="form-control" placeholder="请输入课程标题" style="width:500px">
+                        <select class="form-control" id="isReply">
+                            <option value="0" selected>全部</option>
+                            <option value="1">未回复</option>
+                            <option value="2">已回复</option>
+                        </select>
+                        <button type="button" class="btn btn-success" id="btnSearch">查询</button>
+
+                    </div>
+                </form>
+                <br />
+
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tableResult"></table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="editModalContent">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">回复</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="editForm" action="@Url.Action("AddOrEdit")" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger" style="display:none">
+                            <button class="close" data-close="alert"></button>
+                            <span></span>
+                        </div>
+                        <input type="hidden" name="Id" id="id" />
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">评论</label>
+                            <div class="col-md-9">
+                                <input type="text" name="Comment" id="comment" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">回复</label>
+                            <div class="col-md-9">
+                                <input type="text" name="Reply" id="reply" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success" id="btnSave">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/admin/pages/app/vipComment.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            vipComment.init('@Url.Action("AjaxGet")', '@Url.Action("AddOrEdit")', '@Url.Action("Delete")', '');
+    })
+    </script>
+}

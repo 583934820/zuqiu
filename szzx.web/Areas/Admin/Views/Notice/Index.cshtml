@@ -1,0 +1,43 @@
+﻿
+@using szzx.web.Entity
+@using szzx.web.Models
+
+@model Notice
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>公告
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+                <div class="actions">
+                    <a href="@Url.Action("AddOrEdit")" id="btnAdd" class="btn btn-primary btn-sm">
+                        <i class="fa fa-plus"></i> 添加
+                    </a>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tableResult"></table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/assets/admin/pages/app/notice.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+    $(function () {
+        notice.init('@Url.Action("AjaxGet")', '@Url.Action("AddOrEdit")', '@Url.Action("Delete")');
+    })
+    </script>
+}

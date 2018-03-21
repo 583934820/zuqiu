@@ -1,0 +1,34 @@
+﻿
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>课程列表
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tableResult"></table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/admin/pages/app/video.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+        video.init('@Url.Action("AjaxGet")', '@Url.Action("AddOrEdit")', '@Url.Action("Delete")', '');
+    })
+    </script>
+}

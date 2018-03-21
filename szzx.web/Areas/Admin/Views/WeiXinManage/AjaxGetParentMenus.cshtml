@@ -1,0 +1,9 @@
+﻿
+@using szzx.web.Entity
+@model IEnumerable<Menu>
+
+<option value="0">--请选择--</option>
+@foreach (var m in Model)
+{
+    <option value="@m.Id">@m.MenuName</option>
+}

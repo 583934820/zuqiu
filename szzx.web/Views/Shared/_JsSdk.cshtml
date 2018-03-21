@@ -1,0 +1,89 @@
+﻿
+@using Senparc.Weixin.MP.Helpers
+@model JsSdkUiPackage
+
+<script src="@(Request.Url.Scheme)://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script>
+    function wxUploadImg(localIds, imgId) {
+        //alert(localIds[0]);
+        //alert(imgId);
+        wx.uploadImage({
+            localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                var serverId = res.serverId; // 返回图片的服务器端ID
+                //alert(serverId);
+                //alert(localIds[0]);
+                $('#' + imgId).attr('src', localIds[0]);
+                $('#' + imgId).show();
+                $('#' + imgId).data('mediaId', serverId);
+                //alert($('#' + imgId).data('mediaId'));
+            }
+        });
+    }
+
+    function wxChooseImg(imgId, divEle) {
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                if (divEle) {
+                    divEle.find('img').hide();
+                }
+
+                wxUploadImg(localIds, imgId);
+            }
+        });
+    }
+
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@Model.AppId', // 必填，公众号的唯一标识
+            timestamp: '@Model.Timestamp', // 必填，生成签名的时间戳
+            nonceStr: '@Model.NonceStr', // 必填，生成签名的随机串
+            signature: '@Model.Signature',// 必填，签名
+            jsApiList: [
+                    'checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2。详见：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+        });
+
+        wx.error(function (res) {
+            console.log(res);
+            alert('微信接口验证失败');
+        });
+
+         wx.ready(function () {
+
+            });
+</script>

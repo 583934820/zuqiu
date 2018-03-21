@@ -1,0 +1,54 @@
+﻿
+@{
+    Layout = null;
+}
+@model IEnumerable<szzx.web.Entity.VideoCommentModel>
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart class="weui-bgcolor">
+    <section class="weui-pl20 weui-pr20 weui-f14 weui-pb20">
+        @foreach (var comm in Model)
+        {
+            <div class="weui-bgf weui-box_s weui-bod_r weui-pt10 weui-pb10  weui-mt15">
+                <div class="weui-pl15 weui-pr15">
+                    <div class="weui-f16">@comm.Title</div>
+                    <p class="weui-c_9 weui-bb weui-pb5">@comm.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                    <p class="weui-pt5">@comm.Comment</p>
+                    <div class="weui-t_r  zk" onclick="javascript:this.innerHTML=(this.innerHTML=='-收起'?'+展开':'-收起');">+展开</div>
+                </div>
+                <div class="sliter_box weui-d_n">
+                    <div class="weui-f14">
+                        <a class="weui-cell weui-cell_access" href="javascript:;">
+                            <div class="weui-cell__hd"><img src="images/9_03.png" width="25" class="weui-db weui-mr10" alt=""></div>
+                            <div class="weui-cell__bd">
+                                <span class="weui-blue weui-pr10">管理员</span>   @(comm.ReplyTime?.ToString("yyyy-MM-dd HH:mm:ss"))
+                            </div>
+                        </a>
+                        <p class="weui-pl30 weui-ml15 weui-pb10 weui-pr10">
+                            @comm.Reply
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+        
+
+        @*<p class="weui-c_9 weui-t_c weui-pt20">没有记录了！</p>*@
+
+    </section>
+
+    <script type="text/javascript">
+        (function ($) {
+
+            $('.zk').click(function (e) {
+                $(this).toggleClass('on');
+                $(this).parents().next().slideToggle();
+            });
+        }(jQuery))
+
+    </script>
+</body>
+
+</html>

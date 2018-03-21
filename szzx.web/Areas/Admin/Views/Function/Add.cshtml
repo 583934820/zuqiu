@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "功能管理";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>添加功能
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form" id="addDiv">
+                <form class="form-horizontal" id="addForm" action="@Url.Action("Add")" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger" style="display:none">
+                            <button class="close" data-close="alert"></button>
+                            <span></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">功能名称</label>
+                            <div class="col-md-4">
+                                <input type="text" name="PermissionName" class="form-control" placeholder="输入功能名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">所属级别</label>
+                            <div class="col-md-4">
+                                <select name="Level" id="Level" class="form-control">
+                                    <option value="1">一级目录</option>
+                                    <option value="2">二级目录</option>
+                                    <option value="3">三级目录</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">父级目录</label>
+                            <div class="col-md-4">
+                                <select name="ParentId" id="ParentID" class="form-control">
+                                   <option value="0">无</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">页面路径</label>
+                            <div class="col-md-4">
+                                <input type="text" name="PermissionUrl" class="form-control" placeholder="输入页面路径(如该功能下还有子功能,此项不填)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">图标</label>
+                            <div class="col-md-4">
+                                <input type="text" name="IconName" class="form-control" placeholder="输入图标样式">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">排序</label>
+                            <div class="col-md-4">
+                                <input type="text" name="Sort" class="form-control"  value="1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" id="btnSave" class="btn btn-success">保存</button>
+                                <a class="btn btn-default" href="@Url.Action("Index")">返回列表</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/admin/pages/app/permission.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+    $(function () {
+        functionManager.initAdd('@Url.Action("Add")', '@Url.Action("GetFunctionByLevel")');
+    })
+    </script>
+}
+

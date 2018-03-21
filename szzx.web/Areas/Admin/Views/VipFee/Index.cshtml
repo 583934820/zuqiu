@@ -1,0 +1,52 @@
+﻿
+@using szzx.web.Entity
+@using szzx.web.Models
+
+@model Vip
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>会员缴费历史
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+                <div class="actions">
+                    @*<a href="#" id="btnAdd" class="btn btn-primary btn-sm">
+                            <i class="fa fa-plus"></i> 添加
+                        </a>*@
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <form class="form-inline" role="form" id="searchForm" method="post">
+                    <div class="form-group">
+                        <input type="text" id="keyword" class="form-control" placeholder="请输入会员名或订单号" style="width:500px">
+                        <button type="button" class="btn btn-success" id="btnSearch">查询</button>
+
+                    </div>
+                </form>
+                <br />
+
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tableResult"></table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/assets/admin/pages/app/vipFee.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+    $(function () {
+        vipFee.init('@Url.Action("AjaxGet")', '@Url.Action("AddOrEdit")');
+    })
+    </script>
+}

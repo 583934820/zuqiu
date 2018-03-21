@@ -1,0 +1,47 @@
+﻿@using szzx.web.Models
+@model List<FunctionModel>
+@{ 
+    var firstFuncs = Model.Where(p => p.FunctionLevel == 1);
+    Layout = null;
+}    
+
+<div id="functionList">
+    <ul>
+        @foreach (var firstFun in firstFuncs)
+        {
+            <li data-jstree='{"opened" : true,  "funcId": "@firstFun.Id" }'>@firstFun.FunctionName
+                <ul>
+                    @{ 
+                        var secondFuncs = Model.Where(p => p.ParentID == firstFun.Id);
+                        foreach (var secFun in secondFuncs)
+                        {
+                            var thirdFuncs = Model.Where(p => p.ParentID == secFun.Id);
+                            if (thirdFuncs.Count() == 0)
+                            {
+                                <li data-jstree='{"opened" : true, "selected" : @(secFun.HasRole ? "true" : "false"),  "funcId": "@secFun.Id" }'>@secFun.FunctionName</li>
+                            }
+                            else
+                            {
+                                <li data-jstree='{"opened" : true,  "funcId": "@secFun.Id" }'>@secFun.FunctionName
+                                <ul>
+                                    @{
+                                        
+                                        foreach (var thirdFun in thirdFuncs)
+                                        {
+                                            <li data-jstree='{"opened" : true, "selected" : @(thirdFun.HasRole ? "true" : "false"), "funcId": "@thirdFun.Id" }'>
+                                                @thirdFun.FunctionName
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                                
+                            </li>
+                            }
+                            
+                        }
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</div>

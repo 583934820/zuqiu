@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "公众号配置";
+
+}
+@model szzx.web.Models.MpConfigModel
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>公众号配置
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form" id="addDiv">
+                <form class="form-horizontal" id="addForm" action="@Url.Action("MpConfig")" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger" style="display:none">
+                            <button class="close" data-close="alert"></button>
+                            <span></span>
+                        </div>
+                        <input type="hidden" name="Id" value="@ViewBag.Id" id="id" />
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">重新加入球队开始日期</label>
+                            <div class="col-md-4">
+                                <input type="text" id="rejoinTeamStartDate" name="ReJoinTeamStartDate" class="form-control datepicker" readonly value="@(Model.RejoinTeamStartDate?.ToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">重新加入球队结束日期</label>
+                            <div class="col-md-4">
+                                <input type="text" id="rejoinTeamEndDate" name="ReJoinTeamEndDate" class="form-control datepicker" readonly value="@(Model.RejoinTeamEndDate?.ToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">会员注册缴费</label>
+                            <div class="col-md-4">
+                                <input type="text" id="vipFee" name="VipFee" class="form-control"  value="@(Model.VipFee)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">创建球队费</label>
+                            <div class="col-md-4">
+                                <input type="text" id="teamFee" name="TeamFee" class="form-control" value="@(Model.TeamFee)">
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label class="col-md-3 control-label">开始缴费日期</label>
+                            <div class="col-md-4">
+                                <input type="text" id="startPayDate" name="StartPayDate" class="form-control datepicker" readonly value="@(Model.PayDateRange?.StartDate?.ToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">结束缴费日期</label>
+                            <div class="col-md-4">
+                                <input type="text" id="endPayDate" name="EndPayDate" class="form-control datepicker" readonly value="@(Model.PayDateRange?.EndDate?.ToString("yyyy-MM-dd"))">
+                            </div>
+                        </div>*@
+                        @*<div class="form-group">
+                            <label class="col-md-3 control-label">开始缴费月</label>
+                            <input type="hidden" id="startPayMonthHidden" value="@Model.PayDateRange.StartMonth" />
+                            <div class="col-md-4">
+                                <select class="form-control" id="startPayMonth">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">开始缴费日</label>
+                            <input type="hidden" id="startPayDayHidden" value="@Model.PayDateRange.StartDay" />
+                            <div class="col-md-4">
+                                <select class="form-control" id="startPayDay"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">结束缴费月</label>
+                            <input type="hidden" id="endPayMonthHidden" value="@Model.PayDateRange.EndMonth" />
+                            <div class="col-md-4">
+                                <select class="form-control" id="endPayMonth"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">结束缴费日</label>
+                            <input type="hidden" id="endPayDayHidden" value="@Model.PayDateRange.EndDay" />
+
+                            <div class="col-md-4">
+                                <select class="form-control" id="endPayDay"></select>
+                            </div>
+                        </div>*@
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" id="btnSave" class="btn btn-success">保存</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/admin/pages/app/mpconfig.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+    $(function () {
+        mpconfig.initAdd('@Url.Action("MpConfig")');
+    })
+    </script>
+}
+

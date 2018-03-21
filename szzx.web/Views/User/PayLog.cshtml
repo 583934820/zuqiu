@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+@model List<szzx.web.Entity.VipFee>
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart class="weui-bgcolor">
+    <section class="weui-pl20 weui-pr20 weui-f14 weui-pb20">
+        @foreach (var fee in Model)
+        {
+            <div class="weui-bgf weui-box_s weui-bod_r  weui-mt15">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p class="weui-f16">教练培训费</p>
+                        <p class="weui-c_9 weui-pt10">@fee.FeeTime?.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                    </div>
+                    <div class="weui-cell__ft weui-blue">￥@fee.Fee / 100</div>
+                </div>
+            </div>
+        }
+        
+
+        @*<p class="weui-t_c weui-c_9 weui-pt20">没有记录了！</p>*@
+
+
+    </section>
+</body>
+
+</html>

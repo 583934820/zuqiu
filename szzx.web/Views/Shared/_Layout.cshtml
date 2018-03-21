@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+@Html.Partial("_Head")
+<body>
+    <div class="indexbody" style="padding-bottom:60px;">
+        
+        
+        @RenderBody()
+
+        <!--Footer-->
+        <div id="bottom" class="clearfix">
+            @if (ViewBag.Highlight == 1)
+            {
+                <div class="bottom_bg" style="left:-20px;"></div>
+                <a class="bottomC" href="@Url.Action("Index","Home")">
+                    <img src="~/assets/web/images/b2.png" class="bottomC_img" />
+                    <div class="bottomC_name" style="color:white;">首页</div>
+                </a>
+                <a class="bottomC" href="@Url.Action("MyTeam", "User")">
+                    <img src="~/assets/web/images/b1.png" class="bottomC_img" />
+                    <div class="bottomC_name">我的球队</div>
+                </a>
+                <a class="bottomC" href="@Url.Action("Index","User")">
+                    <img src="~/assets/web/images/b3.png" class="bottomC_img" />
+                    <div class="bottomC_name">个人中心</div>
+                </a>
+            }
+            else if (ViewBag.Highlight == 2)
+            {
+                <div class="bottom_bg" style="right:0;left:0;margin:auto;"></div>
+                <a class="bottomC" href="@Url.Action("Index","Home")">
+                    <img src="~/assets/web/images/b11.png" class="bottomC_img" />
+                    <div class="bottomC_name" >首页</div>
+                </a>
+                <a class="bottomC" href="@Url.Action("MyTeam", "User")">
+                    <img src="~/assets/web/images/b22.png" class="bottomC_img" />
+                    <div class="bottomC_name" style="color:white;">我的球队</div>
+                </a>
+                <a class="bottomC" href="@Url.Action("Index","User")">
+                    <img src="~/assets/web/images/b3.png" class="bottomC_img" />
+                    <div class="bottomC_name">个人中心</div>
+                </a>
+            }
+            else
+            {
+                <div class="bottom_bg" style="right:-20px;"></div>
+                <a class="bottomC" href="@Url.Action("Index","Home")">
+                    <img src="~/assets/web/images/b11.png" class="bottomC_img" />
+                    <div class="bottomC_name" >首页</div>
+                </a>
+                <a class="bottomC" href="@Url.Action("MyTeam", "User")">
+                    <img src="~/assets/web/images/b1.png" class="bottomC_img" />
+                    <div class="bottomC_name">我的球队</div>
+                </a>
+                <a class="bottomC" href="@Url.Action("Index","User")">
+                    <img src="~/assets/web/images/b33.png" class="bottomC_img" />
+                    <div class="bottomC_name" style="color:white;">个人中心</div>
+                </a>
+            }
+                        
+        </div>
+    </div>
+    @RenderSection("scripts", false)
+</body>
+</html>

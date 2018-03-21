@@ -1,0 +1,51 @@
+﻿@model IEnumerable<szzx.web.Entity.VideoClass>
+
+@{
+    Layout = null;
+    var firstCats = Model.Where(p => p.ClassLevel == 1);
+}
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+
+<body ontouchstart class="weui-bgcolor">
+    <section class="weui-pl20 weui-pr20 weui-f14 weui-pb20">
+
+        @foreach (var cat in firstCats)
+        {
+            var secCats = Model.Where(p => p.ClassLevel == 2 && p.ParentId == cat.Id);
+            <div class="weui-bgf weui-box_s weui-bod_r weui-pt10 weui-pb10 weui-pl15 weui-pr15 weui-mt15">
+                <div class="weui-f16">
+                    <span class="weui-db weui_xl">@cat.ClassName</span>
+                </div>
+                <ul class="weui-b_t weui-mt10 weui-lh30 weui-pt5 weui-d_n">
+                    @foreach (var secCat in secCats)
+                    {
+                        <li><a href="@Url.Action("List",new { catId = secCat.Id})">@secCat.ClassName</a></li>
+                    }
+
+                </ul>
+            </div>
+        }
+
+
+    </section>
+
+
+
+    
+    <script>
+        (function ($) {
+            $('.weui_xl').click(function (e) {
+                $(this).toggleClass('on');
+                $(this).parents().next().slideToggle();
+            });
+        }(jQuery))
+        
+    </script>
+</body>
+
+</html>

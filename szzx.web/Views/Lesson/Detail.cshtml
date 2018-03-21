@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = null;
+    var comments = ViewBag.VideoComments as List<szzx.web.Entity.VideoComment>;
+}
+@model szzx.web.Entity.Video 
+@using szzx.web.Common   
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart class="weui-bgcolor weui-f14">
+    <style type="text/css">
+        #secContent img{
+            width:100%
+        }
+    </style>
+    <div class="weui-main">
+        <section>
+            @{ 
+                var videoPath = Model.VideoUrl;
+                if (videoPath.StartsWith("152"))
+                {
+                    videoPath = QiNiuConfig.Domain + "/" + videoPath.Substring(0, 13);
+                }
+                else
+                {
+                    videoPath = QiNiuConfig.Domain + "/" + videoPath;
+                }
+            }
+            <video src="@videoPath" controls="controls" width="100%">
+                您的浏览器不支持 video 标签。
+            </video>
+        </section>
+        <div class="weui-p_r weui-bgf weui-p15">@Model.Title </div>
+        <section class="weui-mt10 weui-bgf weui-p15" id="secContent">
+            @Html.Raw(Model.CONTENT)
+        </section>
+        <section class="weui-mt10">
+            <div class="weui-cells">
+                @foreach (var comment in comments)
+                {
+                    <a class="weui-cell" href="javascript:;">
+                        <div class="weui-cell__hd"><img src="@comment.VipImgPath" alt="" width="40" class="weui-db weui-mr10"></div>
+                        <div class="weui-cell__bd">
+                            <p>@comment.VipName</p>
+                        </div>
+                        <div class="weui-cell__ft weui-f14">@comment.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss")</div>
+                    </a>
+                    <p class="weui-f14 weui-pl10 weui-pb10">@comment.Comment</p>
+                }
+                
+
+            </div>
+
+        </section>
+    </div>
+    <form method="post" id="form1" action="@Url.Action("SendVideoComment")">
+        <input name="VideoId" type="hidden" value="@Model.Id" />
+        <div class="weui-bgcolor01 p10 bottom">
+            <div class="weui-flex">
+                <div class="weui-flex__item">
+                    <div class="weui-bgf weui-bod weui-bod_r5 weui-pl10 weui-pr10 weui-pt5 weui-pb5">
+                        <input class="weui-input" type="text" name="Comment" placeholder="写一条高能评论">
+                    </div>
+                </div>
+                <div class="weui-pl10"><a href="javascript:;" id="sendComment" class="weui-btn weui-btn_mini weui-btn_mini2 weui-btn_primary1">发送</a></div>
+            </div>
+        </div>
+    </form>
+    
+    <img src="@Url.Content(ViewBag.QrCodePath)" class="ewm">
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#sendComment').click(function () {
+                var formData = $webmain.getFormData('form1');
+
+                if (!formData.Comment) {
+                    $.tips({
+                        content: '请输入评论',
+                        stayTime: 2000,
+                        type: "warn"
+                    });
+
+                    return false;
+                }
+
+                $webmain.ajaxPost({
+                    url: '@Url.Action("SendVideoComment")',
+                    data: formData,
+                    success: function (data) {
+                        var dia = $.dialog({
+                            title: '提示',
+                            content: '评论成功',
+                            button: ["确认"]
+                        });
+
+                        dia.on("dialog:action", function (e) {
+                            window.location.reload();
+                        });
+                    }
+                });
+            })
+        })
+    </script>
+</body>
+
+</html>

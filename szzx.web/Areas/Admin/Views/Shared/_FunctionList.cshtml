@@ -1,0 +1,58 @@
+﻿@using szzx.web.Models
+@model IEnumerable<FunctionModel>
+
+
+
+<li>
+    @{
+        var firstFuncs = Model.Where(p => p.FunctionLevel == 1).OrderBy(p => p.FunctionSort).ToList();
+        var count = firstFuncs.Count();
+        for (var i = 0; i < count; i++)
+        {
+            var secondFuncs = Model.Where(p => p.ParentID == firstFuncs[i].Id).OrderBy(p => p.FunctionSort).ToList();
+
+        <li class="@(i == 0 ? "start" : (i == (count - 1) ? "last" : ""))">
+            <a href="javascript:;">
+                <i class="@firstFuncs[i].IconName"></i>
+                <span class="title">@firstFuncs[i].FunctionName</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu" style="display:none;">
+                @foreach (var secFun in secondFuncs)
+                {
+                    var thirdFuncs = Model.Where(p => p.ParentID == secFun.Id).OrderBy(p => p.FunctionSort).ToList();
+                    if (thirdFuncs.Count == 0)
+                    {
+                        <li class="@(secFun.PathUrl != null &&( secFun.PathUrl).ToLower() == ViewBag.CurrentUrl.ToLower() ? "active" : "")" data-url="@ViewBag.CurrentUrl.ToLower()">
+                            <a href="@( secFun.PathUrl)">
+                                <span class="title">@secFun.FunctionName</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="javascript:;">
+                                <span class="title">@secFun.FunctionName</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                @foreach (var thirdFun in thirdFuncs)
+                                {
+                                    <li class="@(thirdFun.PathUrl != null &&( thirdFun.PathUrl).ToLower() == ViewBag.CurrentUrl.ToLower() ? "active" : "")" data-url="@ViewBag.CurrentUrl.ToLower()">
+                                        <a href="@( thirdFun.PathUrl)">
+                                            <span class="title">@thirdFun.FunctionName</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </li>
+                    }
+
+                }
+
+            </ul>
+        </li>
+        }
+    }

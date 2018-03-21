@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart>
+
+    <div class="lo_bg">
+        <img src="~/assets/web/images/lo.png" width="100%">
+    </div>
+
+    <form id="form1" action="@Url.Action("Login")" method="post">
+        <div class="weui-p15 lo_mt">
+            <div class="weui-box_s weui-bgf weui-bod_r lo_box">
+                <div class="weui-bb weui-pb10 weui-p_r">
+                    <i class="weui-dnb user"></i>
+                    <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入手机号" name="mobile">
+                </div>
+                <div class="weui-bb weui-pb10 weui-p_r weui-mt15">
+                    <i class="weui-dnb pass"></i>
+                    <input class="weui-input" type="password" placeholder="请输入登录密码" name="password">
+                </div>
+            </div>
+            <div class="lo_btn weui-t_c"><input type="button" value="登陆" class="weui-white weui-f16" id="btnLogin"></div>
+        </div>
+        <input type="hidden" id="err" value="@ViewBag.Error" />
+    </form>
+
+
+    <div class="lo_footer clearfix weui-f14">
+        <span class="weui-fl">还没有账号，<a href="@Url.Action("Register")" class="weui-blue">立即注册>></a></span>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#btnLogin').click(function () {
+                var formData = $webmain.getFormData('form1');
+
+                if (!formData.mobile || !formData.password) {
+                    $.tips({
+                        content: '请输入手机号和密码',
+                        stayTime: 2000,
+                        type: "warn"
+                    });
+
+                    return false;
+                }
+
+                var el = $.loading({
+                    content: '正在提交...'
+                });
+
+                $('#form1')[0].submit();
+            })
+
+            if ($('#err').val()) {
+                $.tips({
+                    content: $('#err').val(),
+                    stayTime: 2000,
+                    type: "warn"
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>

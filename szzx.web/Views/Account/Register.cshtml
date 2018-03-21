@@ -1,0 +1,196 @@
+﻿
+@{
+    Layout = null;
+}
+@using Senparc.Weixin.MP.Helpers
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart class="weui-bgcolor">
+    @Html.Partial("_JsSdk", (ViewBag.JsPackage as JsSdkUiPackage))
+
+    <form id="form1" method="post" action="@Url.Action("Register")">
+        <div class="weui-cells weui-cells_form weui-f14 weui-mt10">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">手机号</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入手机号" name="MobileNo" id="mobile">
+                </div>
+            </div>
+            <div class="weui-cell weui-cell_vcode">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">验证码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入验证码" name="verifyCode">
+                </div>
+                <div class="weui-cell__ft weui-pt5 weui-pb5 weui-pr10">
+                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_qd weui-btn_qd1 weui-fr" id="btnSend">获取验证码</a>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" placeholder="请输入密码" name="Password">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">确认密码</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" placeholder="请再次输入密码" name="ConfirmPassword">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入真实姓名" name="VipName">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入身份证号码" name="CardNo">
+                </div>
+            </div>
+            <div class="weui-cell ">
+                <div class="weui-cell__bd">资格认证证书</div>
+                <div class="weui-cell__fd weui-t_r">
+                    <select class="weui-select s_bg" name="HasCert"><option value="有">有</option><option value="无" selected>无</option></select>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label"></label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" placeholder="请输入证书编码" name="CertNo">
+                </div>
+            </div>
+        </div>
+        <div class="p10">
+            <div class="weui-bgf">
+                <div class="weui-p20 weui-t_c"><img src="~/assets/web/images/8_03.png" width="90"></div>
+                <div class="weui-pl15 weui-pb20 weui-pr15">
+                    <h3 class="weui-orange weui-pb10">手持身份证注意事项：</h3>
+                    <p>1.五官清晰</p>
+                    <p>2.证件全部信息清晰无遮挡</p>
+                    <p>3.注意露出手臂</p>
+
+                </div>
+                <div>
+                    <img src=""  id="imgFront" style="display:none; width:100%;height:100%" />
+                </div>
+            </div>
+
+            <div class="weui-mt10 clearfix">
+                <div class="weui-uploader__input-box weui-bgf btnUpload" data-img-id="imgFront">                                        
+                    <div class="weui-uploader__input"></div>
+                    <input type="hidden" name="CardImg" id="cardImg" />
+                </div>
+            </div>
+            <div class="weui-pt10 weui-pb30 weui-t_c">
+                <input type="button" class="resita weui-box_s" value="注册" id="btnRegister">
+            </div>
+        </div>
+        <input type="hidden" id="err" value="@ViewBag.Error" />
+
+    </form>
+
+
+    <script type="text/javascript">
+        $(function () {
+
+            $('.btnUpload').tap(function () {
+
+                var imgId = $(this).data('imgId');
+                var me = $(this);
+
+                wxChooseImg(imgId, me);
+            });
+
+            $('#btnSend').click(function () {
+                var mobile = $('#mobile').val();
+                if (!mobile) {
+                    var dia = $.dialog({
+                        title: '提示',
+                        content: '请填写手机号'
+                    });
+
+                    return false;
+                }
+
+                $webmain.ajaxPost({
+                    url: '@Url.Action("SendSms")',
+                    data: {
+                        mobile: mobile
+                    },
+                    success: function (data) {
+                        var dia = $.dialog({
+                            title: '提示',
+                            content: '发送成功' + data.Data
+                        });
+                    }
+                });
+            });
+
+            $('#btnRegister').click(function () {
+                var formData = $webmain.getFormData('form1');
+                if (!formData.MobileNo || !formData.Password || !formData.ConfirmPassword || !formData.VipName || !formData.CardNo) {
+                    var dia = $.dialog({
+                        title: '错误',
+                        content: '请完善资料'
+                    });
+
+                    return false;
+                }
+
+                if (formData.HasCert == '有' && !formData.CertNo) {
+                    var dia = $.dialog({
+                        title: '错误',
+                        content: '请填写证书编号'
+                    });
+
+                    return false;
+                }
+
+                if (formData.Password != formData.ConfirmPassword) {
+                    var dia = $.dialog({
+                        title: '错误',
+                        content: '密码和确认密码不一致'
+                    });
+
+                    return false;
+                }
+
+                var cardImg = $('#imgFront').data('mediaId');
+                if (!cardImg) {
+                    var dia = $.dialog({
+                        title: '错误',
+                        content: '请上传身份证照片'
+                    });
+                    return false;
+                }
+
+                $('#cardImg').val(cardImg);
+
+                var el = $.loading({
+                    content: '正在提交...'
+                });
+
+                $('#form1')[0].submit();
+
+
+            });
+
+            if ($('#err').val()) {
+                $.tips({
+                    content: $('#err').val(),
+                    stayTime: 2000,
+                    type: "warn"
+                })
+            }
+        })
+    </script>
+
+</body>
+
+</html>

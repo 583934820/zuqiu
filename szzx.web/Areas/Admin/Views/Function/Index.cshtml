@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "功能管理";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green-haze">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>功能列表
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+                <div class="actions">
+                    <a href="@Url.Action("Add")" class="btn btn-primary btn-sm">
+                        <i class="fa fa-plus"></i> 添加
+                    </a>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tableResult">
+                   
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="editModalContent">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑功能</h4>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" action="@Url.Action("Edit")" method="post" class="form-horizontal">
+                    <input type="hidden" name="Id" id="functionId" />
+                    <div class="form-body">
+                        <div class="alert alert-danger" style="display:none">
+                            <button class="close" data-close="alert"></button>
+                            <span></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">功能名称</label>
+                            <div class="col-md-4">
+                                <input type="text" name="FunctionName" id="FunctionName" class="form-control" placeholder="输入功能名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">英文名称</label>
+                            <div class="col-md-4">
+                                <input type="text" name="ENFunctionName" id="ENFunctionName" class="form-control" placeholder="输入英文名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">所属等级</label>
+                            <div class="col-md-4">
+                               <select name="FunctionLevel" id="FunctionLevel" class="form-control" >
+                                   <option value="1">一级目录</option>
+                                   <option value="2">二级目录</option>
+                                   <option value="3">三级目录</option>
+                               </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">父级目录</label>
+                            <div class="col-md-4">
+                                <select name="ParentID" id="ParentID" class="form-control">
+                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">页面路径</label>
+                            <div class="col-md-4">
+                                <input type="text" name="PathUrl" id="PathUrl" class="form-control" placeholder="请输入页面路径">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">排序</label>
+                            <div class="col-md-4">
+                                <input type="text" name="FunctionSort" id="FunctionSort" class="form-control" placeholder="请输入排序">
+                            </div>
+                        </div>
+                    
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success" name="btnSave">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/assets/admin/pages/app/permission.js"></script>
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            functionManager.init('@Url.Action("AjaxGetFunctions")', '@Url.Action("Edit")', '@Url.Action("Delete")', '@Url.Action("GetFunctionByLevel")');
+        })
+    </script>
+}
