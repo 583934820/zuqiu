@@ -22,9 +22,34 @@ namespace szzx.web.Controllers
 
         public ActionResult Index()
         {
+            var jssdkUiPackage = JSSDKHelper.GetJsSdkUiPackage(AppConfig.Instance.AppId, AppConfig.Instance.AppSecret, Request.Url.AbsoluteUri);
+            ViewBag.JsPackage = jssdkUiPackage;
+
             var vip = _dal.Get<Vip>(CurrentVip.VipId);
 
             return View(vip);
+        }
+
+        [HttpPost]
+        public ActionResult UploadImg(string serverId = "")
+        {
+            if (!string.IsNullOrEmpty(serverId))
+            {
+                var token = AccessTokenContainer.TryGetAccessToken(AppConfig.Instance.AppId, AppConfig.Instance.AppSecret);
+                var fileName = $"/upload/cardimg/{Guid.NewGuid().ToString("N")}.jpg";
+                Senparc.Weixin.MP.AdvancedAPIs.MediaApi.Get(token, serverId, Server.MapPath("~" + fileName));
+
+                var vip = GetVipInfo();
+                vip.CardImg = fileName;
+
+                _dal.Update(vip);
+
+                return Json(AjaxResult.Success());
+            }
+            else
+            {
+                return Json(AjaxResult.Fail("请上传图片"));
+            }
         }
 
         [HttpPost]

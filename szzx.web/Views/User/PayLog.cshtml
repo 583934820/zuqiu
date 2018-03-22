@@ -15,9 +15,9 @@
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <p class="weui-f16">教练培训费</p>
-                        <p class="weui-c_9 weui-pt10">@fee.FeeTime?.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                        <p class="weui-c_9 weui-pt10">@(fee.FeeTime?.ToString("yyyy-MM-dd HH:mm:ss"))</p>
                     </div>
-                    <div class="weui-cell__ft weui-blue">￥@fee.Fee / 100</div>
+                    <div class="weui-cell__ft weui-blue">￥@(fee.Fee / 100)</div>
                 </div>
             </div>
         }

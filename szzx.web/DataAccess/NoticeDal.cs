@@ -11,7 +11,7 @@ namespace szzx.web.DataAccess
     {
         public IEnumerable<Notice> GetNoticeList(DataTableAjaxConfig config)
         {
-            return GetPagedEntities<Notice>("select * from t_biz_notice ", config);
+            return GetPagedEntities<Notice>("select * from t_biz_notice ", config, null, "createdTime", false);
         }
     }
 }

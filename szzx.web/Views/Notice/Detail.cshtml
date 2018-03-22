@@ -1,0 +1,16 @@
+﻿
+@{
+    Layout = null;
+}
+@model szzx.web.Entity.Notice
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart>
+    <section class="weui-p20 weui-f14 weui-lh30">
+        @Html.Raw(Model?.Content)
+    </section>
+</body>
+
+</html>

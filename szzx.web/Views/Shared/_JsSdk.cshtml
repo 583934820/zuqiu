@@ -4,7 +4,7 @@
 
 <script src="@(Request.Url.Scheme)://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
-    function wxUploadImg(localIds, imgId) {
+    function wxUploadImg(localIds, imgId, callback) {
         //alert(localIds[0]);
         //alert(imgId);
         wx.uploadImage({
@@ -18,11 +18,14 @@
                 $('#' + imgId).show();
                 $('#' + imgId).data('mediaId', serverId);
                 //alert($('#' + imgId).data('mediaId'));
+                if (callback) {
+                    callback(serverId);
+                }
             }
         });
     }
 
-    function wxChooseImg(imgId, divEle) {
+    function wxChooseImg(imgId, divEle, callback) {
         wx.chooseImage({
             count: 1, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -33,7 +36,7 @@
                     divEle.find('img').hide();
                 }
 
-                wxUploadImg(localIds, imgId);
+                wxUploadImg(localIds, imgId, callback);
             }
         });
     }

@@ -111,7 +111,7 @@ namespace szzx.web.DataAccess
                 whereStr += " and title like '%' + @Title + '%'";
             }
 
-            return GetPagedEntities<VideoCommentModel>(sql + whereStr, dtConfig, new { Title = videoName });
+            return GetPagedEntities<VideoCommentModel>(sql + whereStr, dtConfig, new { Title = videoName }, "createdTime", false);
         }
 
         public IEnumerable<VideoCommentModel> GetVipComments(int vipId)

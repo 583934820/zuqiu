@@ -11,9 +11,9 @@
                 "columns": [
 
                     {
-                        "data": "ImgPath", "orderable": false, title: '图片',
+                        "data": "ImgPath", "orderable": false, title: '封面图片',
                         "render": function (data) {
-                            return '<img src="' + (data || '') + '" style="width:50px;height:50px" />';
+                            return '<img src="' + (data || '') + '" style="width:100px;height:100px" />';
                         }
                     },
                     { "data": "Title", "orderable": false, title: '标题' },
@@ -37,7 +37,6 @@
                               data: {
                                   id: id
                               },
-                              formId: 'editForm',
                               success: function () {
                                   $('#tableResult').DataTable().draw(false);
                               }

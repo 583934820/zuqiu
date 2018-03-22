@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = null;
+}
+@model IEnumerable<szzx.web.Entity.Notice>
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+@Html.Partial("_Head")
+<body ontouchstart class="weui-bgcolor">
+    <section class="weui-pl20 weui-pr20 weui-f14 weui-pb20">
+        @foreach (var n in Model)
+        {
+            <div class="weui-bgf weui-bod_r weui-box_s  weui-mt10 weui-p15">
+                <a href="@Url.Action("Detail",new { id = n.Id})" class="weui-db">
+                    <img src="@n.ImgPath" width="100%">
+                    <p class="weui-pt10">@n.Title</p>
+                </a>
+            </div>
+        }
+        
+
+    </section>
+</body>
+
+</html>
