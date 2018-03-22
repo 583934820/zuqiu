@@ -40,7 +40,8 @@ namespace szzx.web.Controllers
                 Senparc.Weixin.MP.AdvancedAPIs.MediaApi.Get(token, serverId, Server.MapPath("~" + fileName));
 
                 var vip = GetVipInfo();
-                vip.CardImg = fileName;
+                vip.ImgPath = fileName;
+                vip.UpdatedTime = DateTime.Now;
 
                 _dal.Update(vip);
 

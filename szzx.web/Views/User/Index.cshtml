@@ -59,7 +59,7 @@
                     </div>
                     <div class="weui-cell__ft"></div>
                 </a>
-                <a class="weui-cell weui-cell_access" href="javascript:;">
+                <a class="weui-cell weui-cell_access" href="@Url.Action("Index","Notice")">
                     <div class="weui-cell__hd"><img src="~/assets/web/images/3_12.png" class="weui-db weui-bod_r50 weui-mr10" width="30" alt=""></div>
                     <div class="weui-cell__bd">
                         <p>活动推荐</p>
@@ -94,16 +94,18 @@
             $('.btnUpload').tap(function () {
 
                 function upImgCallback(serverId) {
+                    //alert(serverId);
                     $webmain.ajaxPost({
                         url: '@Url.Action("UploadImg")',
                         data: {
                             serverId: serverId
                         },
                         success: function (data) {
-                            var dia = $.dialog({
-                                title: '提示',
-                                content: '上传成功'
-                            });
+                            $.tips({
+                                content: '上传成功',
+                                stayTime: 2000,
+                                type: "success"
+                            })
                         }
                     });
                 }
@@ -114,7 +116,7 @@
                 wxChooseImg(imgId, me, upImgCallback);
             });
 
-            $('#btnGetPay').click(function () {
+            $('#btnGetPay').tap(function () {
 
                 var el = $.loading({
                     content: '加载中...',

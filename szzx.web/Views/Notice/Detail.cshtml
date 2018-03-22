@@ -8,7 +8,12 @@
 <html lang="zh-CN">
 @Html.Partial("_Head")
 <body ontouchstart>
-    <section class="weui-p20 weui-f14 weui-lh30">
+    <style type="text/css">
+        #content img {
+            width:100%;
+        }
+    </style>
+    <section class="weui-p20 weui-f14 weui-lh30" id="content">
         @Html.Raw(Model?.Content)
     </section>
 </body>

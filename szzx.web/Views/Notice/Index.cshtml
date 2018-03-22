@@ -8,7 +8,12 @@
 <html lang="zh-CN">
 @Html.Partial("_Head")
 <body ontouchstart class="weui-bgcolor">
-    <section class="weui-pl20 weui-pr20 weui-f14 weui-pb20">
+    <style type="text/css">
+        #noticeList img {
+            max-height:180px !important;
+        }
+    </style>
+    <section class="weui-pl20 weui-pr20 weui-f14 weui-pb20" id="noticeList">
         @foreach (var n in Model)
         {
             <div class="weui-bgf weui-bod_r weui-box_s  weui-mt10 weui-p15">
