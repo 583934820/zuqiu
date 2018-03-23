@@ -45,6 +45,8 @@ namespace szzx.web.Controllers
 
                 _dal.Update(vip);
 
+                _dal.UpdateCommentsVipImg(vip);
+
                 return Json(AjaxResult.Success());
             }
             else

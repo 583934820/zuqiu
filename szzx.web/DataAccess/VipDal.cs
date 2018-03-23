@@ -23,6 +23,11 @@ namespace szzx.web.DataAccess
             return GetPagedEntities<VipFee>($"select * from t_biz_vip_fee where status = 1 {whereStr}", config, new { Keyword = keyword}, order: "orderCode", isAsc: false);
         }
 
+        public void UpdateCommentsVipImg(Vip vip)
+        {
+            Connection.Execute("update t_video_comment set VipImgPath = @ImgPath where vipId = @VipId", new { ImgPath = vip.ImgPath, VipId = vip.Id });
+        }
+
         public Vip GetVipByOpenId(string openId)
         {
             return Connection.Query<Vip>("select * from t_vip where WeChatId = @OpenId", new { OpenId = openId }).FirstOrDefault();
