@@ -14,6 +14,8 @@ namespace szzx.web.Controllers
         // GET: Notice
         public ActionResult Index()
         {
+            ViewBag.Title = "活动推荐";
+
             var notices = dal.GetAll<Notice>().OrderByDescending(p => p.CreatedTime);
 
             return View(notices);
@@ -21,6 +23,8 @@ namespace szzx.web.Controllers
 
         public ActionResult Detail(int id = 0)
         {
+            ViewBag.Title = "活动详情";
+
             if (id == 0)
             {
                 return RedirectToAction("Index");

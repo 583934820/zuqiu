@@ -42,7 +42,7 @@ namespace szzx.web.Common
             var productInfo = "中捷足球-教练培训费";
 
             //var mpconfig = GetMpConfigModel();
-            var price = 1; //(int)((mpconfig == null  || mpconfig.VipFee == 0 ? 50 : mpconfig.VipFee) * 100);
+            var price = 5000 * 100; //(int)((mpconfig == null  || mpconfig.VipFee == 0 ? 50 : mpconfig.VipFee) * 100);
             var timeStamp = TenPayV3Util.GetTimestamp();
             var nonestr = TenPayV3Util.GetNoncestr();
 

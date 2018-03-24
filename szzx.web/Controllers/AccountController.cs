@@ -38,6 +38,8 @@ namespace szzx.web.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.Title = "登录";
+
             return View();
         }
 
@@ -45,6 +47,8 @@ namespace szzx.web.Controllers
         [HttpPost]
         public ActionResult Login(string mobile, string password)
         {
+            ViewBag.Title = "登录";
+
             if (string.IsNullOrEmpty(mobile) || string.IsNullOrEmpty(password))
             {
                 ViewBag.Error = "手机号或密码为空";
@@ -82,6 +86,8 @@ namespace szzx.web.Controllers
 
         public ActionResult Register()
         {
+            ViewBag.Title = "注册";
+
             var jssdkUiPackage = JSSDKHelper.GetJsSdkUiPackage(AppConfig.Instance.AppId, AppConfig.Instance.AppSecret, Request.Url.AbsoluteUri);
             ViewBag.JsPackage = jssdkUiPackage;
 
@@ -92,6 +98,8 @@ namespace szzx.web.Controllers
         [HttpPost]
         public ActionResult Register(Vip vip, string verifyCode)
         {
+            ViewBag.Title = "注册";
+
             if (string.IsNullOrEmpty(vip.MobileNo) || string.IsNullOrEmpty(vip.Password) || string.IsNullOrEmpty(vip.VipName))
             {
                 ViewBag.Error = "请完善资料";

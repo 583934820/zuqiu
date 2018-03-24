@@ -22,6 +22,8 @@ namespace szzx.web.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.Title = "用户中心";
+
             var jssdkUiPackage = JSSDKHelper.GetJsSdkUiPackage(AppConfig.Instance.AppId, AppConfig.Instance.AppSecret, Request.Url.AbsoluteUri);
             ViewBag.JsPackage = jssdkUiPackage;
 
@@ -82,12 +84,16 @@ namespace szzx.web.Controllers
 
         public ActionResult PayLog()
         {
+            ViewBag.Title = "我的缴费";
+
             var vipFees = _dal.GetAll<VipFee>().Where(p => p.VipId == CurrentVip.VipId && p.Status == 1).OrderByDescending(p => p.FeeTime).ToList();
             return View(vipFees);
         }
 
         public ActionResult CommentReply()
         {
+            ViewBag.Title = "咨询回复";
+
             var comments = _videoDal.GetVipComments(CurrentVip.VipId);
 
             return View(comments);
