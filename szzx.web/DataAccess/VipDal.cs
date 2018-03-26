@@ -48,23 +48,15 @@ namespace szzx.web.DataAccess
             return Connection.Query<int>("select count(1) + 1 from t_vip where createdtime > @Time", new { Time = DateTime.Today }).FirstOrDefault();
         }
 
-        public IEnumerable<VipModel> GetPagedVips(DataTableAjaxConfig dtConfig, int status, string vipName)
+        public IEnumerable<Vip> GetPagedVips(DataTableAjaxConfig dtConfig,  string vipName)
         {
-            var feeCondition = status == (int)WXStatus.未续费 ? "" : " and feeStatus = 1 ";
-            var sql = $"select *,( SELECT count(1) FROM t_biz_team_player AS tbtp WHERE tbtp.VipId = v.Id) as IsInTeam from t_vip as v where 1=1 {feeCondition} ";
-            if (status != -1)
-            {
-                sql += " and wxstatus = @Status ";
-            }
-            else
-            {
-                sql += " and wxstatus > 0 ";
-            }
+            var sql = $"select * from t_vip as v where 1=1  ";
+
             if (!string.IsNullOrEmpty(vipName))
             {
                 sql += " and vipName like CONCAT('%',@VipName,'%')  ";
             }
-            return GetPagedEntities<VipModel>(sql, dtConfig, new { Status = status, VipName = vipName});
+            return GetPagedEntities<Vip>(sql, dtConfig, new {  VipName = vipName});
         }
 
         public IEnumerable<Vip> GetExpiredVips()

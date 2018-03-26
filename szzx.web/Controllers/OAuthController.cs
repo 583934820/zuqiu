@@ -50,7 +50,8 @@ namespace szzx.web.Controllers
                         {
                             OpenId = openId,
                             VipId = vip.Id,
-                            VipName = vip.VipName
+                            VipName = vip.VipName,
+                            pwd = EncryptHelper.Md5(vip.Password)
                         });
 
                         return RedirectToAction("Index", "User");

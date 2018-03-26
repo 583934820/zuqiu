@@ -23,7 +23,7 @@ namespace szzx.web.Areas.Admin.Controllers
 
         public ActionResult AjaxGet(DataTableAjaxConfig dtConfig, int status = -1, string vipName = "")
         {
-            var miles = _dal.GetPagedVips(dtConfig, status, vipName);
+            var miles = _dal.GetPagedVips(dtConfig, vipName);
             return Json(new DataTableAjaxResult
             {
                 draw = dtConfig.draw,
@@ -41,84 +41,18 @@ namespace szzx.web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddOrEdit(Vip model, int isRefund = 0)
+        public ActionResult AddOrEdit(Vip model)
         {
             if (ModelState.IsValid)
             {
                 var entity = _dal.Get<Vip>(model.Id);
                 if (entity != null)
                 {
-                    //var auditResult = "";
-                    //entity.WXStatus = model.WXStatus;
-                    //entity.RemoveReason = model.RemoveReason;
-                    //if (entity.WXStatus == (int)WXStatus.已注册) //移除
-                    //{                        
-                    //    //entity.FeeStatus = (int)PayStatus.待支付;                                          
-
-                    //    _teamDal.Insert(new ActionHis
-                    //    {
-                    //        VipId = entity.Id,
-                    //        ActionType = ActionTypeEnum.移除球员.ToString(),
-                    //        CreatedBy = CurrentUser.LoginName,
-                    //        CreatedTime = DateTime.Now,
-                    //        Remark = VipTeamRemoveHisModel.Init(entity.Id).ToJson()
-                    //    });
-
-                    //    var team = _teamDal.GetByTeamAdminId(entity.Id); //是队长则删除球队，删除球员
-                    //    if (team != null)
-                    //    {
-                    //        _teamDal.DeleteTeamByAdminId(entity.Id);
-                    //        _teamDal.DeleteTeamPlayerByTeamId(team.Id);
-                    //    }
-                    //    else
-                    //    {
-                    //        _teamDal.ExitTeam(entity.Id);
-                    //    }
-
-                    //    _teamDal.DeleteTeamPlayerActHis(entity.Id);
-                    //    _teamDal.Insert(new TeamPlayerActionHis
-                    //    {
-                    //        VipId = entity.Id,
-                    //        TeamId = 0,
-                    //        ActionType = (int)TeamPlayerActionType.移除,
-                    //        CreatedTime = DateTime.Now
-                    //    });
-
-
-                    //    //TODO 发送通知
-                    //    auditResult = $"您已被移除苏州足协，原因：{entity.RemoveReason}，如有疑问，请联系客服咨询";
-
-                    //    //退款
-                    //    if (isRefund != 0)
-                    //    {
-                    //        DoRefund(entity);
-
-                    //        //退还建队费用
-                    //        DoRefundTeam(entity);
-                    //    }
-                    //    entity.RemoveReason = "";
-                    //}
-                    //else if (entity.WXStatus == (int)WXStatus.审核失败)
-                    //{
-                    //    //TODO 发送通知，退款？
-                    //    auditResult = $"审核失败，原因：{entity.RemoveReason}，如有疑问，请联系客服咨询";
-
-                    //    DoRefund(entity);
-                        
-                    //}
-                    //else if (entity.WXStatus == (int)WXStatus.审核成功)
-                    //{
-                    //    auditResult = "审核成功";
-                    //    entity.RemoveReason = "";
-                    //}
-                    //entity.UpdatedTime = DateTime.Now;
-
-                    //_dal.Update(entity);
-
-                    //if (!string.IsNullOrEmpty(auditResult))
-                    //{
-                    //    TemplateMsgMethod.SendWxStatusNotify(AppConfig.Instance.AppId, entity.WeChatId, auditResult, DateTime.Now, entity.VipName, entity.VipNo);
-                    //}
+                    entity.Password = model.Password;
+                    //entity.CardImg = model.CardImg;
+                    entity.CertNo = model.CertNo;
+                    entity.HasCert = model.HasCert;
+                    _dal.Update(entity);
 
                 }
                 return Json(AjaxResult.Success());

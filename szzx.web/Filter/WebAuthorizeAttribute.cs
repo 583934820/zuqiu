@@ -116,7 +116,7 @@ namespace szzx.web.Filter
 
                 var dal = new VipDal();
                 var vip = dal.Get<Vip>(userInfo.VipId);
-                if (vip == null)
+                if (vip == null || Framework.Security.EncryptHelper.Md5(vip.Password) != userInfo.pwd)
                 {
                     throw new ArgumentException("vip 不存在");
                 }

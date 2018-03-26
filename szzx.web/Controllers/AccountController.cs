@@ -72,7 +72,8 @@ namespace szzx.web.Controllers
             var userInfo = new CurrentVipModel
             {
                 VipId = user.Id,
-                OpenId = user.WeChatId
+                OpenId = user.WeChatId,
+                pwd = EncryptHelper.Md5(password)
             };
 
             SetAuthCookie(userInfo);

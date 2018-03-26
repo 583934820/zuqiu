@@ -20,7 +20,7 @@ namespace szzx.web.Entity
         public string Password { get; set; }
         public string CardImg { get; set; }
         public string CardNo { get; set; }
-        public int HasCert { get; set; }
+        public string HasCert { get; set; }
 
         public int FeeStatus { get; set; }
 
